@@ -1,0 +1,54 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "dataProfile":  {
+                                           "value":  "Confidential"
+                                       },
+                       "tier":  {
+                                    "value":  "Data"
+                                },
+                       "description":  {
+                                           "value":  "MGMT storageAccountName DEV version 1.0"
+                                       },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "displayName":  {
+                                           "value":  "storageAccountName: adapdeveus001stg"
+                                       },
+                       "resourceGroupName":  {
+                                                 "value":  "adap-dev-eus-rg"
+                                             },
+                       "regionName":  {
+                                          "value":  "WUS"
+                                      },
+                       "organizationName":  {
+                                                "value":  "Quisitive"
+                                            },
+                       "accessTier":  {
+                                          "value":  "Hot"
+                                      },
+                       "storageAccountName":  {
+                                                  "value":  "adapdeveus001stg"
+                                              },
+                       "chargebackId":  {
+                                            "value":  "867-5309"
+                                        },
+                       "storageKind":  {
+                                           "value":  "StorageV2"
+                                       },
+                       "dri":  {
+                                   "value":  "admin@azarch.org"
+                               },
+                       "environment":  {
+                                           "value":  "DEV"
+                                       },
+                       "projectName":  {
+                                           "value":  "MGMT"
+                                       },
+                       "accountType":  {
+                                           "value":  "Standard_LRS"
+                                       }
+                   }
+}

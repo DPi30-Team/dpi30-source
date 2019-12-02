@@ -1,0 +1,216 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "singleQuote": "'",
+    "logAnalytics": "[concat('[parameters(', variables('singleQuote'), 'logAnalytics', variables('singleQuote'), ')]')]",
+    "resourceName": "[concat('[parameters(', variables('singleQuote'), 'resourceName', variables('singleQuote'), ')]')]",
+    "resourceDiagName": "[concat('[concat(', 'parameters(', variables('singleQuote'), 'resourceName', variables('singleQuote'), ')', ', ', variables('singleQuote'), '/', variables('singleQuote'), ', ', variables('singleQuote'), 'Microsoft.Insights/setByPolicy', variables('singleQuote'), ')]')]",
+    "resourceNameField": "[concat('[field(', variables('singleQuote'), 'name', variables('singleQuote'), ')]')]",
+    "resourceFullNameField": "[concat('[field(', variables('singleQuote'), 'fullName', variables('singleQuote'), ')]')]",
+    "roleDefinitionIds": "[concat('[parameters(', variables('singleQuote'), 'roleDefinitionIds', variables('singleQuote'), ')]')]",
+    "location": "[concat('[parameters(', variables('singleQuote'), 'location', variables('singleQuote'), ')]')]",
+    "locationField": "[concat('[field(', variables('singleQuote'), 'location', variables('singleQuote'), ')]')]",
+    "defaultafcInitiativeName": "afc-Baseline-Initiative"
+  },
+  "resources": [
+
+    {
+      "type": "Microsoft.Authorization/policySetDefinitions",
+      "name": "[variables('defaultafcInitiativeName')]",
+      "apiVersion": "2018-05-01",
+      "dependsOn": [],
+      "properties": {
+        "displayName": "[afc] Deploy Baseline Controls for Azure Resources",
+        "description": "This initiative is part of the Azure Foundational Controls Library.",
+        "metadata": {
+          "category": "Azure Foundation Control"
+        },
+        "parameters": {
+          "location": {
+            "type": "Array",
+            "metadata": {
+              "displayName": "Allowed Locations",
+              "description": "The list of locations to audit against.",
+              "strongType": "location"
+            }
+          },
+          "roleDefinitionIds": {
+            "type": "array",
+            "metadata": {
+              "description": "The list of Approved Roles",
+              "displayName": "Allowed Roles"
+            }
+          }
+        },
+        "policyDefinitions": [
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-automation-account-variables-encryption')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-automation-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-dataFactory-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-datalakestore-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-datalakestore-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-eventhub-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-eventhub-namespace-auth-rules')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-eventhub-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-keyvault-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-keyvault-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-logicapp-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-logicapp-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-1433-internet')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-1521-internet')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-22-internet')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-3389-internet')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-5432-internet')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-nsg-inbound-any-internet')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-rediscache-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-rediscache-secure-connections')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-servicebus-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-servicebus-namespace-auth-rules')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-db-advdatasecurity')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-db-allowed-locations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-db-tde-disabled')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-mi-advdatasecurity')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-server-aadadmin')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-server-advdatasecurity')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-server-allowed-locations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-server-firewall-rule')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-sql-server-threat-detection')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-account-access-tier')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-advanced-threat-protection')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-https-traffic-only')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-storage-unrestricted-network-access')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-streamanalytics-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-streamanalytics-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-contributor-mfa')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-depreciated-accounts')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-depreciated-accounts-owner-perms')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-external-contributor')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-external-owner')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-external-reader')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-max-owners')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-min-owners')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-owner-mfa')]" },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-audit-subscription-reader-mfa')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-automation-allowedlocation')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-dataFactory-allowedlocation')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-datalakestore-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-eventhub-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-keyvault-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-logicapp-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-rbac-allowed-role-definitions')]",
+            "parameters": { "roleDefinitionIds": { "value": "[variables('roleDefinitionIds')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-rediscache-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-servicebus-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-sql-db-allowed-locations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-sql-db-tde-disabled')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-sql-server-allowed-locations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-storage-account-file-encryption')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-storage-allowed-locations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          },
+          { "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-storage-https-traffic-only')]" },
+          {
+            "policyDefinitionId": "[resourceId('Microsoft.Authorization/policyDefinitions/', 'afc-deny-streamanalytics-allowedlocations')]",
+            "parameters": { "allowedLocations": { "value": "[variables('location')]" } }
+          }
+
+        ]
+      }
+    }
+  ],
+  "outputs": {}
+}

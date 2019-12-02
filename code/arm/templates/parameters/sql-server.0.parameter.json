@@ -1,0 +1,51 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "dataProfile":  {
+                                           "value":  "Confidential"
+                                       },
+                       "tier":  {
+                                    "value":  "Data"
+                                },
+                       "description":  {
+                                           "value":  "ADAP sqlServerName SMK version 1.0"
+                                       },
+                       "displayName":  {
+                                           "value":  "sqlServerName: adap-smk-eus-001-sql"
+                                       },
+                       "sqlServerAdminPassword":  {
+                                                      "value":  "Z1!xcvbnmnbvcxz"
+                                                  },
+                       "regionName":  {
+                                          "value":  "EUS"
+                                      },
+                       "sqlServerAdminUserName":  {
+                                                      "value":  "sqlAdmin"
+                                                  },
+                       "organizationName":  {
+                                                "value":  "Quisitive"
+                                            },
+                       "sqlServerName":  {
+                                             "value":  "adap-smk-eus-001-sql"
+                                         },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "resourceGroupName":  {
+                                                 "value":  "adap-smk-eus-rg"
+                                             },
+                       "dri":  {
+                                   "value":  "admin@azarch.org"
+                               },
+                       "environment":  {
+                                           "value":  "SMK"
+                                       },
+                       "projectName":  {
+                                           "value":  "ADAP"
+                                       },
+                       "chargebackId":  {
+                                            "value":  "867-5309"
+                                        }
+                   }
+}

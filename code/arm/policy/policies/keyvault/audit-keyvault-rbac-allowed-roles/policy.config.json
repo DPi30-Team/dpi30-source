@@ -1,0 +1,16 @@
+{
+  "config": {
+    "policyName": {
+      "value": "afc-audit-keyvault-rbac-allowed-role-definitions"
+    },
+    "policyDisplayName": {
+      "value": " [afc] Audit Policy for KeyVault RBAC Allowed Role Definitions"
+    },
+    "policyDescription": {
+      "value": "Audit KeyVault RBAC Allowed Role Definitions"
+    },
+    "policyCategory": {
+      "value": "{\"category\":\"AFC\"}"
+    }
+  }
+}

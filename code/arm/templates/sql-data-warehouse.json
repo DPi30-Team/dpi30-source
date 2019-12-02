@@ -1,0 +1,108 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "administratorLogin": {
+      "defaultValue": "sqlAdmin",
+      "type": "string"
+    },
+    "administratorLoginPassword": {
+      "type": "string",
+      "defaultValue": "Z1!xcvbnmnbvcxz"
+    },
+    "dwName": {
+      "defaultValue": "SmokeDW",
+      "type": "string"
+    },
+    "requestedServiceObjectiveName": {
+      "defaultValue": "DW200c",
+      "type": "string"
+    }
+  },
+  "variables": {
+    "sqlServerName": "[concat(parameters('projectName'),'-',parameters('environmentTag'),'-',parameters('locationtag'),'-01-sql')]"
+  },
+  "resources": [
+    {
+      "name": "[variables('sqlServerName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [],
+      "tags": "[parameters('configuration')]",
+      "properties": {
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Sql/servers/databases",
+      "kind": "v12.0,user,datawarehouse,gen2",
+      "name": "[concat(variables('sqlServerName'), '/', parameters('projectName'))]",
+      "apiVersion": "2017-03-01-preview",
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "Display Name": "[concat('SQL DW DB Name: ',parameters('dwName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "properties": {
+        "edition": "DataWarehouse",
+        "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]",
+        "collation": "SQL_Latin1_General_CP1_CI_AS"
+      },
+      "sku": {
+        "name": "[parameters('requestedServiceObjectiveName')]",
+        "tier": "DataWarehouse"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+      ]
+    }
+  ],
+  "outputs": {}
+}

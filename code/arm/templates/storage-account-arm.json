@@ -1,0 +1,211 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account"
+      }
+    },
+    "storageAccountLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Recommendation: If using to store backup data, choose the paired region for resilience"
+      }
+    },
+    "accountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "accessTier": {
+      "type": "string",
+      "defaultValue": "",
+      "allowedValues": [
+        "Hot",
+        "Cool",
+        ""
+      ],
+      "metadata": {
+        "description": "This setting is required if using BlobStorage as the storageKind, otherwise can be left blank"
+      }
+    },
+    "storageKind": {
+      "type": "string",
+      "defaultValue": "Storage",
+      "allowedValues": [
+        "Storage",
+        "StorageV2",
+        "BlobStorage"
+      ]
+    },
+    "subnetResourceIdList": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "A list of subnet resource ids."
+      }
+    },
+    "enableCors": {
+      "type": "string",
+      "defaultValue": "False",
+      "allowedValues": [
+        "False",
+        "True"
+      ]
+    },
+    "allowedHeaders": {
+      "type": "array",
+      "defaultValue": [
+        "*"
+      ]
+    },
+    "allowedOrigins": {
+      "type": "array",
+      "defaultValue": [
+        "*"
+      ]
+    },
+    "maxAgeInSeconds": {
+      "type": "string",
+      "defaultValue": "3600"
+    },
+    "allowedMethods": {
+      "type": "array",
+      "defaultValue": [
+        "GET"
+      ]
+    },
+    "exposedHeaders": {
+      "type": "array",
+      "defaultValue": [
+        "*"
+      ]
+    }
+  },
+  "variables": {
+    "networkAclObject": {
+      "bypass": "Logging, Metrics",
+      "copy": [
+        {
+          "name": "virtualNetworkRules",
+          "count": "[if(greater(length(parameters('subnetResourceIdList')), 0), length(parameters('subnetResourceIdList')), 1)]",
+          "input": {
+            "id": "[if(greater(length(parameters('subnetResourceIdList')), 0), parameters('subnetResourceIdList')[copyIndex('virtualNetworkRules')], json('null'))]",
+            "action": "Allow"
+          }
+        }
+      ],
+      "defaultAction": "Deny"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2019-04-01",
+      "name": "[parameters('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[parameters('storageAccountLocation')]",
+      "tags": {
+        "Display Name": "[concat('Storage Account: ',parameters('projectName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "sku": {
+        "name": "[parameters('accountType')]"
+      },
+      "kind": "[parameters('storageKind')]",
+      "tags": {},
+      "properties": {
+        "encryption": {
+          "services": {
+            "blob": {
+              "enabled": true
+            },
+            "file": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "[if(empty(parameters('accessTier')), json('null'), parameters('accessTier'))]",
+        "supportsHttpsTrafficOnly": true,
+        "networkAcls": "[if(greater(length(parameters('subnetResourceIdList')), 0), variables('networkAclObject'), json('null'))]"
+      },
+      "resources": [
+        {
+          "name": "default",
+          "type": "blobServices",
+          "condition": "[equals(parameters('enableCors'), 'True')]",
+          "apiVersion": "2018-11-01",
+          "dependsOn": [
+            "[parameters('storageAccountName')]"
+          ],
+          "properties": {
+            "cors": {
+              "corsRules": [
+                {
+                  "allowedOrigins": "[parameters('allowedOrigins')]",
+                  "allowedMethods": "[parameters('allowedMethods')]",
+                  "maxAgeInSeconds": "[parameters('maxAgeInSeconds')]",
+                  "exposedHeaders": "[parameters('exposedHeaders')]",
+                  "allowedHeaders": "[parameters('allowedHeaders')]"
+                }
+              ]
+            }
+          },
+          "resources": []
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "storageKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+    },
+    "storageConnectionString": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
+    },
+    "storagePrimaryEndpointsBlob": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')), '2019-04-01').primaryEndpoints.blob]"
+    }
+  }
+}

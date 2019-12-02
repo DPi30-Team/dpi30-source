@@ -1,0 +1,76 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "armVnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the arm vnet"
+      }
+    },
+    "armVnetAddressSpaceCIDR": {
+      "type": "string",
+      "metadata": {
+        "description": "CIDR for the address space of the ARM Vnet"
+      }
+    },
+    "subnetConfiguration": {
+      "type": "array",
+      "metadata": {
+        "description": "Array of objects in the following schema: https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2018-11-01/virtualnetworks#Subnet"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('armVnetName')]",
+      "tags": {
+        "Display Name": "[concat('vNet: ',parameters('projectName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "apiVersion": "2018-11-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('armVnetAddressSpaceCIDR')]"
+          ]
+        },
+        "subnets": "[parameters('subnetConfiguration')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

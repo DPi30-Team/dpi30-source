@@ -1,0 +1,133 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configuration": {
+      "defaultValue": {
+        "Display Name": "SQL Server MI ADAP",
+        "Bill To - Internal Chargeback ID": "8675309",
+        "Operator or Directly Responsible Individual (DRI)": "azureadmin@company.com",
+        "Project Name": "ADAP",
+        "Project Version": "1.0",
+        "Environment": "smk",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "type": "object",
+      "metadata": {
+        "description": "Configuration for this resource"
+      }
+    },
+    "msqlServerName": {
+      "type": "string",
+      "defaultValue": "adap-smk-eus-001-sqlmi",
+      "metadata": {
+        "description": "Name of the SQL Server Managed Instance"
+      }
+    },
+    "msqlSubnetId": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of new Azure VNet where you can deploy Azure Sql Managed Instances and the resources that use them"
+      }
+    },
+    "sqlServerAdminUserName": {
+      "type": "string",
+      "defaultValue": "sqlmiAdmin",
+      "metadata": {
+        "description": "The Azure SQL Server Administrator (SA) username. A generated name will be used if not supplied."
+      }
+    },
+    "sqlServerAdminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The Azure SQL Server Administrator (SA) password"
+      }
+    },
+    "sqlServerActiveDirectoryAdminLogin": {
+      "type": "string",
+      "defaultValue": "az.adap.nonproduction.sqladmins",
+      "metadata": {
+        "description": "The active directory admin or group name that will be assigned to the SQL server"
+      }
+    },
+    "sqlServerActiveDirectoryAdminObjectId": {
+      "type": "string",
+      "metadata": {
+        "description": "The object id of the active directory admin that will be assigned to the SQL server"
+      }
+    },
+    "vCores": {
+      "type": "int",
+      "defaultValue": 8,
+      "metadata": {
+        "description": "Number of vCores"
+      }
+    },
+    "storageSizeGb": {
+      "type": "int",
+      "defaultValue": 128,
+      "metadata": {
+        "description": "Storage limit for the database in GB"
+      }
+    },
+    "publicDataEndpointEnabled": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Control whether the public endpoint is available or not."
+      }
+    }
+  },
+  "variables": {
+    "sqlServerAdminUserName": "[if(equals(parameters('sqlServerAdminUserName'), ''), uniqueString(resourceGroup().id), parameters('sqlServerAdminUserName'))]"
+  },
+  "resources": [
+    {
+      "name": "[parameters('msqlServerName')]",
+      "type": "Microsoft.Sql/managedInstances",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "GP_Gen5",
+        "tier": "GeneralPurpose",
+        "family": "Gen5",
+        "capacity": "[parameters('vCores')]"
+      },
+      "properties": {
+        "administratorLogin": "[variables('sqlServerAdminUserName')]",
+        "administratorLoginPassword": "[parameters('sqlServerAdminPassword')]",
+        "subnetId": "[parameters('msqlSubnetId')]",
+        "vCores": "[parameters('vCores')]",
+        "storageSizeInGB": "[parameters('storageSizeGb')]",
+        "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]"
+      },
+      "resources": [
+        {
+          "name": "activeDirectory",
+          "type": "administrators",
+          "apiVersion": "2017-03-01-preview",
+          "dependsOn": [
+            "[parameters('msqlServerName')]"
+          ],
+          "properties": {
+            "administratorType": "ActiveDirectory",
+            "login": "[parameters('sqlServerActiveDirectoryAdminLogin')]",
+            "sid": "[parameters('sqlServerActiveDirectoryAdminObjectId')]",
+            "tenantId": "[subscription().tenantId]"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "saAdministratorLogin": {
+      "type": "string",
+      "value": "[variables('sqlServerAdminUserName')]"
+    },
+    "fullyQualifiedDomainName": {
+      "type": "string",
+      "value": "[reference(parameters('msqlServerName')).fullyQualifiedDomainName]"
+    }
+  }
+}

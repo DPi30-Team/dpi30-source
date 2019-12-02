@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "sqlServerName": {
+      "type": "string"
+    },
+    "elasticPoolName": {
+      "type": "string"
+    },
+    "elasticPoolEdition": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "elasticPoolDtu": {
+      "type": "int",
+      "defaultValue": 50
+    },
+    "elasticPoolMinDtu": {
+      "type": "int",
+      "defaultValue": 0
+    },
+    "elasticPoolMaxDtu": {
+      "type": "int",
+      "defaultValue": 20
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Sql/servers/elasticpools",
+      "apiVersion": "2014-04-01",
+      "tags": {
+        "Display Name": "[concat('SQL Server Elastic Pool: ',parameters('projectName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "name": "[concat(parameters('sqlServerName'), '/', parameters('elasticPoolName'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "edition": "[parameters('elasticPoolEdition')]",
+        "dtu": "[parameters('elasticPoolDtu')]",
+        "databaseDtuMin": "[parameters('elasticPoolMinDtu')]",
+        "databaseDtuMax": "[parameters('elasticPoolMaxDtu')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

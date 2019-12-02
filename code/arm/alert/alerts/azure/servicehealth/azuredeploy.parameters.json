@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configuration": {
+      "value": {
+        "displayName": "Policy Compliance Alert",
+        "managedBy": "support@MSP.com",
+        "environment": "PRD",
+        "application": "Security",
+        "billing": "['Fabric']",
+        "deploymentDate": "2019-04-22 00:00:00Z",
+        "deploymentUser": "smakai@quiorp.com",
+        "role": "Azure Alert"
+      }
+    },
+    "alertName": {
+      "value": "afc-azure-servicehealth-alert"
+    },
+    "alertDescription": {
+      "value": "Alert - Azure Service Health"
+    },
+    "primaryActionGroup": {
+      "value": "ag-critical-infrastructure"
+    }
+  }
+}

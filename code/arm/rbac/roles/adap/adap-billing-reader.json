@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "rbacName": "ADAP Billing Reader"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "apiVersion": "2018-01-01-preview",
+      "name": "[variables('rbacName')]",
+      "properties": {
+        "description": "ADAP Billing Reader Custom Role",
+        "roleName": "adap.billing.reader",
+        "assignableScopes": [
+          "[subscription().id]"
+        ],
+        "permissions": [
+          {
+            "Actions": [
+              "Microsoft.Authorization/*/read",
+              "Microsoft.Billing/*/read",
+              "Microsoft.Consumption/*/read",
+              "Microsoft.Commerce/*/read",
+              "Microsoft.Management/managementGroups/read",
+              "Microsoft.Support/*"
+            ],
+            "NotActions": [],
+            "DataActions": [],
+            "NotDataActions": []
+          }
+        ]
+      }
+    }
+  ]
+}

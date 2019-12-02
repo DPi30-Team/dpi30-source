@@ -1,0 +1,66 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account the container belongs to"
+      }
+    },
+    "containerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the container"
+      }
+    },
+    "publicAccess": {
+      "type": "string",
+      "defaultValue": "None",
+      "allowedValues": [
+        "Container",
+        "Blob",
+        "None"
+      ],
+      "metadata": {
+        "description": "Level of public accessibility of the created container"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[concat(parameters('storageAccountName'), '/default/', parameters('containerName'))]",
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2019-04-01",
+      "properties": {
+        "publicAccess": "[parameters('publicAccess')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

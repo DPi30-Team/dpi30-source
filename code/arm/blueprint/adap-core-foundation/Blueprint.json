@@ -1,0 +1,329 @@
+{
+  "properties": {
+    "displayName": "ADAP Core Foundation",
+    "description": "Azure core foundation for the Azure Data & Analytics Platform (ADAP) - Data Platform in 30 Days (DPi30) Program",
+    "targetScope": "subscription",
+    "parameters": {
+      "organizationName": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Enter your organization name (e.g. Contoso), must be unique",
+          "description": "organizationName"
+        },
+        "defaultValue": "Contoso"
+      },
+      "LogAnalytics_DataRetention": {
+        "type": "int",
+        "metadata": {
+          "displayName": "Number of days data will be retained in Log Analytics",
+          "description": "LogAnalytics_DataRetention"
+        },
+        "defaultValue": 365,
+        "allowedValues": [
+          30,
+          60,
+          90,
+          120,
+          180,
+          365
+        ]
+      },
+      "LogAnalytics_Location": {
+        "type": "string",
+
+        "metadata": {
+          "displayName": "Azure Region used when establishing the Log Analytics workspace",
+          "description": "LogAnalytics_Location"
+        },
+        "defaultValue": "East US",
+        "allowedValues": [
+          "East US",
+          "East US 2",
+          "West US",
+          "West US 2",
+          "Canada Central",
+          "Central US",
+          "North Central US",
+          "South Central US"
+        ]
+      },
+      "deployADAPResourceGroupStorageAccount_accountType": {
+        "type": "string",
+        "metadata": {
+          "displayName": "accountType (Deploy ADAP Resource Group Storage Account)"
+        },
+        "defaultValue": "Standard_LRS",
+        "allowedValues": [
+          "Standard_LRS",
+          "Standard_GRS",
+          "Standard_RAGRS",
+          "Premium_LRS"
+        ]
+      },
+      "deployADAPResourceGroupStorageAccount_accessTier": {
+        "type": "string",
+        "metadata": {
+          "displayName": "accessTier (Deploy ADAP Resource Group Storage Account)",
+          "description": "This setting is required if using BlobStorage as the storageKind, otherwise can be left blank"
+        },
+        "defaultValue": "Hot",
+        "allowedValues": [
+          "Hot",
+          "Cool"
+        ]
+      },
+      "deployADAPResourceGroupStorageAccount_storageKind": {
+        "type": "string",
+        "metadata": {
+          "displayName": "storageKind (Deploy ADAP Resource Group Storage Account)"
+        },
+        "defaultValue": "StorageV2",
+        "allowedValues": [
+          "Storage",
+          "StorageV2",
+          "BlobStorage"
+        ]
+      },
+      "projectVersion": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Project Version",
+          "description": "Version number of this project (1.0)"
+        },
+        "defaultValue": "1.0"
+      },
+      "projectName": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Project Name",
+          "description": "Give a name for the project such as adap or dpi30"
+        },
+        "defaultValue": "adap"
+      },
+      "chargebackId": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Chargeback Id",
+          "description": "Department Charge-back ID"
+        },
+        "defaultValue": "8675309"
+      },
+      "dri": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Directly Responsible Individual",
+          "description": "Operator or Directly Responsible Individual email address"
+        },
+        "defaultValue": "user@domain.com"
+      },
+      "environmentTag": {
+        "type": "string",
+        "metadata": {
+          "description": "Select the Azure environment tag: dev, smk, prd, uat, sdb",
+          "displayName": "Environment Tag"
+        },
+        "defaultValue": "dev"
+      },
+      "locationtag": {
+        "type": "string",
+        "metadata": {
+          "description": "Select the Azure location tag to deploy the Resources: eus,eus2,wus,wus2,cus,scus,ncus",
+          "displayName": "Azure Location Tag"
+        },
+        "defaultValue": "eus"
+      },
+      "AzureRegion": {
+        "type": "string",
+        "metadata": {
+          "description": "Select the Azure Region to deploy the Resources",
+          "displayName": "Azure Region",
+          "strongType": "location"
+        },
+        "defaultValue": "eastus"
+      },
+      "vnet_vnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Virtual Network address prefix"
+        },
+        "defaultValue": "10.0.0.0/16",
+        "allowedValues": []
+      },
+      "vnet_enable-ddos-protection": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Enable Virtual Network DDoS protection",
+          "description": "Determines whether or not DDoS Protection is enabled in the Virtual Network"
+        },
+        "defaultValue": "true"
+      },
+      "vnet_sharedsvcs-subnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Shared services subnet address prefix",
+          "description": "Value used in Virtual Network / Route Table, Jumpbox and Active Directory Domain Services templates"
+        },
+        "defaultValue": "10.0.0.0/24",
+        "allowedValues": []
+      },
+      "vnet_adap-subnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "ADAP subnet address prefix"
+        },
+        "defaultValue": "10.0.1.0/24",
+        "allowedValues": []
+      },
+      "vnet_app-gateway-subnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Application Gateway subnet address prefix"
+        },
+        "defaultValue": "10.0.2.0/24",
+        "allowedValues": []
+      },
+      "vnet_gateway-subnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Virtual Network Gateway subnet address prefix"
+        },
+        "defaultValue": "10.0.3.0/24",
+        "allowedValues": []
+      },
+      "vnet_azure-firewall-subnet-address-prefix": {
+        "type": "string",
+        "metadata": {
+          "displayName": "Azure Firewall subnet address prefix"
+        },
+        "defaultValue": "10.0.4.0/24",
+        "allowedValues": []
+      },
+      "vnet_logs-retention-in-days": {
+        "type": "int",
+        "metadata": {
+          "displayName": "Log retention in days",
+          "description": "Specifies the number of days that logs will be kept for; a value of 0 will retain data indefinitely"
+        },
+        "defaultValue": 365
+      },
+      "nsg_logs-retention-in-days": {
+        "type": "int",
+        "metadata": {
+          "displayName": "Log retention in days",
+          "description": "Specifies the number of days that logs will be kept for; a value of 0 will retain data indefinitely"
+        },
+        "defaultValue": 365
+      }
+    },
+    "resourceGroups": {
+      "SharedServices-RG": {
+        "name": "[concat('mgmt-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Management Services"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Management",
+          "Data Profile": "Confidential",
+          "Display Name": "resource group name: [concat('mgmt-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]"
+        }
+      },
+      "Network-RG": {
+        "name": "[concat('vnet-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Networks"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Display Name": "[concat('resource Group Name: vnet-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Network",
+          "Data Profile": "Confidential"
+        }
+      },
+       "Test-RG": {
+        "name": "[concat('adap-smk-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Tests"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Display Name": "[concat('resource Group Name: adap-smk-',parameters('locationtag'),'-rg')]",
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Test",
+          "Data Profile": "Confidential"
+        }
+      },
+      "Identity-RG": {
+        "name": "[concat('secu-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Security"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Display Name": "[concat('resource Group Name: sec-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Security",
+          "Data Profile": "Confidential"
+        }
+      },
+      "ADAP-RG": {
+        "name": "[concat('adap-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Azure Data & Analytics Platform"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Display Name": "[concat('resource Group Name: adap-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Data",
+          "Data Profile": "Confidential"
+        }
+      },
+      "Bastion-RG": {
+        "name": "[concat('bast-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+        "location": "[parameters('AzureRegion')]",
+        "metadata": {
+          "displayName": "Resource Group for Bastion Hosts"
+        },
+        "dependsOn": [],
+        "tags": {
+          "Display Name": "[concat('resource Group Name: bast-',parameters('environmentTag'),'-',parameters('locationtag'),'-rg')]",
+          "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+          "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+          "Project Name": "parameters('projectName')",
+          "Project Version": "parameters('projectVersion')",
+          "Environment": "parameters('environmentTag')",
+          "Tier": "Host",
+          "Data Profile": "Confidential"
+        }
+      }
+    }
+  }
+}

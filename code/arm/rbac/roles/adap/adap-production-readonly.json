@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "rbacName": "ADAP Production Read-Only"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "apiVersion": "2018-01-01-preview",
+      "name": "[variables('rbacName')]",
+      "properties": {
+        "description": "NetOps",
+        "roleName": "adap.production.readonly",
+        "assignableScopes": [
+          "[subscription().id]"
+        ],
+        "permissions": [
+          {
+            "Actions": [
+              "Microsoft.Insights/alertRules/*",
+              "Microsoft.ResourceHealth/availabilityStatuses/read",
+              "Microsoft.Resources/deployments/*",
+              "Microsoft.Resources/subscriptions/resourceGroups/read",
+              "Microsoft.Sql/servers/databases/read",
+              "Microsoft.Sql/servers/read",
+              "Microsoft.Sql/locations/*/read",
+              "Microsoft.Support/*",
+              "Microsoft.Authorization/*/read",
+              "Microsoft.Compute/availabilitySets/read",
+              "Microsoft.Compute/virtualMachines/*/read",
+              "Microsoft.Compute/virtualMachines/read",
+              "Microsoft.Storage/storageAccounts/read"
+            ],
+            "NotActions": [],
+            "DataActions": [],
+            "NotDataActions": []
+          }
+        ]
+      }
+    }
+  ]
+}

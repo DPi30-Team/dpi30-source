@@ -1,0 +1,67 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "firewallRuleNamePrefix": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The prefix for the firewall rule name, it will be appended by the IP address"
+      }
+    },
+    "ipAddresses": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "Array of IP addresses to whitelist against a SQL server"
+      }
+    },
+    "serverName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the server to add firewall rules to"
+      }
+    },
+    "subnetResourceIdList": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "A list of subnet resource ids."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[replace(concat(parameters('serverName'), '/', if(greater(length(parameters('firewallRuleNamePrefix')), 0) , parameters('ipAddresses')[copyIndex()], 'placeholder')), '.', '_')]",
+      "condition": "[greater(length(parameters('ipAddresses')), 0)]",
+      "type": "Microsoft.DBforPostgreSQL/servers/firewallRules",
+      "apiVersion": "2017-12-01",
+      "properties": {
+        "startIpAddress": "[parameters('ipAddresses')[copyIndex()]]",
+        "endIpAddress": "[parameters('ipAddresses')[copyIndex()]]"
+      },
+      "copy": {
+        "count": "[if(greater(length(parameters('ipAddresses')), 0), length(parameters('ipAddresses')), 1)]",
+        "mode": "serial",
+        "name": "firewallRuleCopy",
+        "batchSize": 3
+      }
+    },
+    {
+      "name": "[replace(concat(parameters('serverName'), '/', if(greater(length(parameters('subnetResourceIdList')), 0) , last(split(parameters('subnetResourceIdList')[copyIndex()], '/')), 'placeholder')), '.', '_')]",
+      "condition": "[greater(length(parameters('subnetResourceIdList')), 0)]",
+      "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
+      "apiVersion": "2017-12-01",
+      "properties": {
+        "virtualNetworkSubnetId": "[parameters('subnetResourceIdList')[copyIndex()]]"
+      },
+      "copy":{
+        "count": "[if(greater(length(parameters('subnetResourceIdList')), 0), length(parameters('subnetResourceIdList')), 1)]",
+          "mode": "Parallel",
+          "name": "virtualNetworkRuleCopy"
+        }
+    }
+  ],
+  "outputs": {}
+}

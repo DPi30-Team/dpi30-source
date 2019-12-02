@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="8" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2019-11-05" time="15:03:38">
+  <environment clr-version="4.0.30319.42000" user-domain="AzureAD" cwd="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests" platform="Microsoft Windows 10 Enterprise|C:\Windows|\Device\Harddisk0\Partition3" machine-name="X1-GALLUCCI" nunit-version="2.5.8.0" os-version="10.0.18362" user="PatrickGallucci" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="4.7331" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\at.event-hub-namespace.tests.ps1" executed="True" result="Success" success="True" time="2.2787" asserts="0" description="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\at.event-hub-namespace.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Template: event-hub-namespace.json" executed="True" result="Success" success="True" time="2.2599" asserts="0" description="Template: event-hub-namespace.json">
+            <results>
+              <test-suite type="TestFixture" name="Template Syntax" executed="True" result="Success" success="True" time="0.0871" asserts="0" description="Template Syntax">
+                <results>
+                  <test-case description="Has a JSON template" name="Template: event-hub-namespace.json.Template Syntax.Has a JSON template" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Has a parameters file" name="Template: event-hub-namespace.json.Template Syntax.Has a parameters file" time="0.0066" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Converts from JSON and has the expected properties" name="Template: event-hub-namespace.json.Template Syntax.Converts from JSON and has the expected properties" time="0.016" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Template Validation" executed="True" result="Success" success="True" time="0.9149" asserts="0" description="Template Validation">
+                <results>
+                  <test-case description="Template C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\event-hub-namespace.json and C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\event-hub-namespace.parameters.json parameter file passes validation" name="Template: event-hub-namespace.json.Template Validation.Template C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\event-hub-namespace.json and C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\event-hub-namespace.parameters.json parameter file passes validation" time="0.8763" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\at.sql-server.tests.ps1" executed="True" result="Success" success="True" time="2.4477" asserts="0" description="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\at.sql-server.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Template: sql-server.json" executed="True" result="Success" success="True" time="2.4415" asserts="0" description="Template: sql-server.json">
+            <results>
+              <test-suite type="TestFixture" name="Template Syntax" executed="True" result="Success" success="True" time="0.0591" asserts="0" description="Template Syntax">
+                <results>
+                  <test-case description="Has a JSON template" name="Template: sql-server.json.Template Syntax.Has a JSON template" time="0.0057" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Has a parameters file" name="Template: sql-server.json.Template Syntax.Has a parameters file" time="0.0017" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Converts from JSON and has the expected properties" name="Template: sql-server.json.Template Syntax.Converts from JSON and has the expected properties" time="0.0132" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Template Validation" executed="True" result="Success" success="True" time="0.7976" asserts="0" description="Template Validation">
+                <results>
+                  <test-case description="Template C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\sql-server.json and C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\sql-server.parameters.json parameter file passes validation" name="Template: sql-server.json.Template Validation.Template C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\sql-server.json and C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\..\..\..\arm\templates\sql-server.parameters.json parameter file passes validation" time="0.7638" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\qt.psscripts.help.tests.ps1" executed="True" result="Success" success="True" time="0.0035" asserts="0" description="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\qt.psscripts.help.tests.ps1">
+        <results />
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\qt.psscripts.quality.tests.ps1" executed="True" result="Success" success="True" time="0.0033" asserts="0" description="C:\AzureDevOps\Repos\Quisitive\dpi30\code\scripts\ps\tests\qt.psscripts.quality.tests.ps1">
+        <results />
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "cosmosDbName": {
+      "type": "string"
+    },
+    "cosmosDbType": {
+      "type": "string",
+      "allowedValues": [
+        "GlobalDocumentDB",
+        "MongoDB"
+      ]
+    },
+    "defaultConsistencyLevel": {
+      "type": "string",
+      "allowedValues": [
+        "Eventual",
+        "Session",
+        "BoundedStaleness",
+        "Strong",
+        "ConsistentPrefix"
+      ]
+    },
+    "enableVirtualNetworkFilter": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "subnetResourceIdList": {
+      "type": "array",
+      "defaultValue": []
+    },
+    "ipRangeFilter": {
+      "type": "string",
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "copy": [
+      {
+        "name": "virtualNetworkRulesCopy",
+        "count": "[if(greater(length(parameters('subnetResourceIdList')), 0), length(parameters('subnetResourceIdList')), 1)]",
+        "input": {
+          "id": "[if(greater(length(parameters('subnetResourceIdList')), 0), parameters('subnetResourceIdList')[copyIndex('virtualNetworkRulesCopy')], json('null'))]"
+        }
+      }
+    ],
+    "virtualNetworkRulesEmpty": [],
+    "virtualNetworkRules": "[if(greater(length(parameters('subnetResourceIdList')), 0), variables('virtualNetworkRulesCopy'), variables('virtualNetworkRulesEmpty'))]"
+  },
+  "resources": [
+    {
+      "name": "[parameters('cosmosDbName')]",
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "tags": {
+        "Display Name": "[concat('CosmosDB: ',parameters('projectName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "apiVersion": "2015-04-08",
+      "location": "[resourceGroup().location]",
+      "kind": "[parameters('cosmosDbType')]",
+      "properties": {
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "[parameters('defaultConsistencyLevel')]"
+        },
+        "databaseAccountOfferType": "Standard",
+        "ipRangeFilter": "[parameters('ipRangeFilter')]",
+        "isVirtualNetworkFilterEnabled": "[if(greater(length(variables('virtualNetworkRules')), 0), bool('true'), bool('false'))]",
+        "virtualNetworkRules": "[variables('virtualNetworkRules')]"
+      }
+    }
+  ],
+  "outputs": {
+    "PrimaryMasterKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName')), '2015-04-08').primaryMasterKey]"
+    },
+    "PrimaryReadonlyMasterKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName')), '2015-04-08').primaryReadonlyMasterKey]"
+    }
+  }
+}

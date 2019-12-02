@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "rbacName": "ADAP Non-Production Owner"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "apiVersion": "2018-01-01-preview",
+      "name": "[variables('rbacName')]",
+      "properties": {
+        "description": "ADAP Non-Production Owner Custom Role",
+        "roleName": "adap.nonproduction.owner",
+        "assignableScopes": [
+          "[subscription().id]"
+        ],
+        "permissions": [
+          {
+            "Actions": [
+              "Microsoft.Insights/alertRules/*",
+              "Microsoft.ResourceHealth/availabilityStatuses/read",
+              "Microsoft.Resources/deployments/*",
+              "Microsoft.Resources/subscriptions/resourceGroups/read",
+              "Microsoft.DataFactory/dataFactories/*",
+              "Microsoft.Sql/servers/databases/*",
+              "Microsoft.Sql/servers/*",
+              "Microsoft.Support/*",
+              "Microsoft.Authorization/*/read",
+              "Microsoft.Compute/availabilitySets/*",
+              "Microsoft.Compute/virtualMachines/*",
+              "Microsoft.Storage/storageAccounts/*",
+              "Microsoft.Logic/*",
+              "Microsoft.ServiceBus/*",
+              "Microsoft.Web/connections/*"
+            ],
+            "NotActions": [],
+            "DataActions": [],
+            "NotDataActions": []
+          }
+        ]
+      }
+    }
+  ]
+}

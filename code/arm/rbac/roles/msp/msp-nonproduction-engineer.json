@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {
+    "rbacName": "MSP Non-Production Engineer"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleDefinitions",
+      "apiVersion": "2018-01-01-preview",
+      "name": "[variables('rbacName')]",
+      "properties": {
+        "description": "NetOps",
+        "roleName": "msp.nonproduction.engineer",
+        "assignableScopes": [
+          "[subscription().id]"
+        ],
+        "permissions": [
+          {
+            "Actions": [
+              "Microsoft.Insights/*",
+              "Microsoft.ResourceHealth/*",
+              "Microsoft.Resources/deployments/*",
+              "Microsoft.Resources/subscriptions/*",
+              "Microsoft.DataFactory/*",
+              "Microsoft.Sql/servers/databases/*",
+              "Microsoft.Sql/servers/*",
+              "Microsoft.Support/*",
+              "Microsoft.Authorization/*",
+              "Microsoft.Compute/*",
+              "Microsoft.Storage/*",
+              "Microsoft.Logic/*",
+              "Microsoft.ServiceBus/*",
+              "Microsoft.Web/*"
+            ],
+            "NotActions": [],
+            "DataActions": [],
+            "NotDataActions": []
+          }
+        ]
+      }
+    }
+  ]
+}

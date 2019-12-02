@@ -1,0 +1,54 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "tier":  {
+                                    "value":  "Data"
+                                },
+                       "Description":  {
+                                           "value":  "ADAP databaseName SMK version 1.0"
+                                       },
+                       "displayName":  {
+                                           "value":  "databaseName: SmokerSQLDBOLAP"
+                                       },
+                       "databaseCollation":  {
+                                                 "value":  "SQL_Latin1_General_CP1_CI_AS"
+                                             },
+                       "dataProfile":  {
+                                           "value":  "Confidential"
+                                       },
+                       "databaseServiceTier":  {
+                                                   "value":  "Basic"
+                                               },
+                       "organizationName":  {
+                                                "value":  "Quisitive"
+                                            },
+                       "sqlServerName":  {
+                                             "value":  "adap-smk-eus-001-sql"
+                                         },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "databaseName":  {
+                                            "value":  "SmokerSQLDBOLAP"
+                                        },
+                       "resourceGroupName":  {
+                                                 "value":  "adap-smk-eus-rg"
+                                             },
+                       "dri":  {
+                                   "value":  "admin@azarch.org"
+                               },
+                       "environment":  {
+                                           "value":  "SMK"
+                                       },
+                       "projectName":  {
+                                           "value":  "ADAP"
+                                       },
+                       "chargebackId":  {
+                                            "value":  "867-5309"
+                                        },
+                       "databaseEdition":  {
+                                               "value":  "Basic"
+                                           }
+                   }
+}

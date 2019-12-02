@@ -1,0 +1,33 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "environmentTag":  {
+                                              "value":  "dev"
+                                          },
+                       "sku":  {
+                                   "value":  "Basic"
+                               },
+                       "dri":  {
+                                   "value":  "admin@contoso.com"
+                               },
+                       "publicIPAllocationMethod":  {
+                                                        "value":  "Static"
+                                                    },
+                       "projectName":  {
+                                           "value":  "adap"
+                                       },
+                       "chargebackId":  {
+                                            "value":  "8675309"
+                                        },
+                       "publicIPAddressName":  {
+                                                   "value":  "default"
+                                               },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "locationtag":  {
+                                           "value":  "eus"
+                                       }
+                   }
+}

@@ -1,0 +1,30 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "postgresSku":  {
+                                           "value":  {
+                                                         "name":  "GP_Gen5_2",
+                                                         "tier":  "GeneralPurpose",
+                                                         "size":  5120,
+                                                         "family":  "Gen5",
+                                                         "capacity":  2
+                                                     }
+                                       },
+                       "postgresServerName":  {
+                                                  "value":  "default"
+                                              },
+                       "postgresAdminPassword":  {
+                                                     "value":  "default"
+                                                 },
+                       "storageAccountName":  {
+                                                  "value":  "default"
+                                              },
+                       "securityAlertEmailAddress":  {
+                                                         "value":  "default"
+                                                     },
+                       "postgresAdminLogin":  {
+                                                  "value":  "default"
+                                              }
+                   }
+}

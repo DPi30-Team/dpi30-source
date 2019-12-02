@@ -1,0 +1,21 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "useSharedRequestUnits":  {
+                                                     "value":  "false"
+                                                 },
+                       "databaseNeedsCreation":  {
+                                                     "value":  "false"
+                                                 },
+                       "offerThroughput":  {
+                                               "value":  400
+                                           },
+                       "databaseName":  {
+                                            "value":  "default"
+                                        },
+                       "accountName":  {
+                                           "value":  "default"
+                                       }
+                   }
+}

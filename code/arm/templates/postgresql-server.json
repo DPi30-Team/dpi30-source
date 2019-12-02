@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "postgresServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the PostgreSQL server"
+      }
+    },
+    "postgresSku": {
+      "type": "object",
+      "defaultValue": {
+        "name": "GP_Gen5_2",
+        "tier": "GeneralPurpose",
+        "size": 5120,
+        "family": "Gen5",
+        "capacity": 2
+      }
+    },
+    "postgresAdminLogin": {
+      "type": "string"
+    },
+    "postgresAdminPassword": {
+      "type": "securestring"
+    },
+    "securityAlertEmailAddress": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "SecurityAlertPolicyName": "[concat(parameters('postgresServerName'), '-DefaultSecurityAlert')]"
+  },
+  "resources": [
+    {
+      "name": "[parameters('postgresServerName')]",
+      "type": "Microsoft.DBforPostgreSQL/servers",
+      "apiVersion": "2017-12-01",
+      "location": "[resourceGroup().location]",
+      "sku": "[parameters('postgresSku')]",
+      "properties": {
+        "storageProfile": {
+          "storageMB": "[parameters('postgresSku').size]",
+          "backupRetentionDays": 35,
+          "geoRedundantBackup": "Disabled"
+        },
+        "version": "9.6",
+        "sslEnforcement": "Enabled",
+        "administratorLogin": "[parameters('postgresAdminLogin')]",
+        "administratorLoginPassword": "[parameters('postgresAdminPassword')]"
+      },
+      "resources": [
+        {
+          "name": "[variables('securityAlertPolicyName')]",
+          "type": "securityAlertPolicies",
+          "apiVersion": "2017-12-01",
+          "properties": {
+            "state": "Enabled",
+            "disabledAlerts": [],
+            "emailAddresses": [
+              "[parameters('securityAlertEmailAddress')]"
+            ],
+            "emailAccountAdmins": false,
+            "retentionDays": 90,
+            "storageEndpoint": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/')]",
+            "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+          },
+          "dependsOn": [
+            "[parameters('postgresServerName')]"
+          ]
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "fullyQualifiedDomainName": {
+      "type": "string",
+      "value": "[reference(parameters('postgresServerName')).fullyQualifiedDomainName]"
+    }
+  }
+}

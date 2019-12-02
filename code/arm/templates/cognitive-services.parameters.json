@@ -1,0 +1,27 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "configuration":  {
+                                             "value":  {
+                                                           "Display Name":  "Cognitive Services ADAP",
+                                                           "Bill To - Internal Chargeback ID":  "8675309",
+                                                           "Operator or Directly Responsible Individual (DRI)":  "azureadmin@company.com",
+                                                           "Project Name":  "ADAP",
+                                                           "Project Version":  "1.0",
+                                                           "Environment":  "smk",
+                                                           "Tier":  "Data",
+                                                           "Data Profile":  "Confidential"
+                                                       }
+                                         },
+                       "cognitiveServiceName":  {
+                                                    "value":  "default"
+                                                },
+                       "cognitiveServiceSku":  {
+                                                   "value":  "S1"
+                                               },
+                       "cognitiveServiceType":  {
+                                                    "value":  "default"
+                                                }
+                   }
+}

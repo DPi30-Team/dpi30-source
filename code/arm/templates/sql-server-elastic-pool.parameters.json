@@ -1,0 +1,42 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentTag": {
+      "value": "dev"
+    },
+    "elasticPoolEdition": {
+      "value": "Standard"
+    },
+    "dri": {
+      "value": "admin@contoso.com"
+    },
+    "sqlServerName": {
+      "value": "default"
+    },
+    "projectName": {
+      "value": "adap"
+    },
+    "chargebackId": {
+      "value": "8675309"
+    },
+    "elasticPoolMaxDtu": {
+      "value": 20
+    },
+    "elasticPoolMinDtu": {
+      "value": "default"
+    },
+    "projectVersion": {
+      "value": "1.0"
+    },
+    "elasticPoolDtu": {
+      "value": 50
+    },
+    "locationtag": {
+      "value": "eus"
+    },
+    "elasticPoolName": {
+      "value": "default"
+    }
+  }
+}

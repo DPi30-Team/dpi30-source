@@ -1,0 +1,90 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string"
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string"
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string"
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string"
+    },
+    "environmentTag": {
+      "defaultValue": "dev",
+      "type": "string"
+    },
+    "locationtag": {
+      "defaultValue": "eus",
+      "type": "string"
+    },
+    "eventHubTier": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ]
+    },
+    "eventHubCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "maxValue": 20
+    },
+    "isAutoInflateEnabled": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "maximumThroughputUnits": {
+      "type": "int",
+      "defaultValue": 6,
+      "minValue": 0,
+      "maxValue": 20,
+      "metadata": {
+        "description": "Upper limit for Auto Inflate scaling"
+      }
+    }
+  },
+  "variables": {
+    "eventHubNamespaceName": "[concat(parameters('projectName'),parameters('environmentTag'),parameters('locationtag'),'01ehns')]"
+  },
+  "resources": [
+    {
+      "name": "[variables('eventHubNamespaceName')]",
+      "tags": {
+        "Display Name": "[concat('Event Hub Namespace: ',parameters('projectName'))]",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "Data",
+        "Data Profile": "Confidential"
+      },
+      "type": "Microsoft.EventHub/namespaces",
+      "apiVersion": "2017-04-01",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('eventHubTier')]",
+        "tier": "[parameters('eventHubTier')]",
+        "capacity": "[parameters('eventHubCapacity')]"
+      },
+      "properties": {
+        "zoneRedundant": false,
+        "isAutoInflateEnabled": "[parameters('isAutoInflateEnabled')]",
+        "maximumThroughputUnits": "[parameters('maximumThroughputUnits')]",
+        "kafkaEnabled": false
+      }
+    }
+  ],
+  "outputs": {}
+}

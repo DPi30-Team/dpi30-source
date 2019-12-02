@@ -1,0 +1,177 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "description": {
+      "defaultValue": "Resource Description",
+      "type": "string",
+      "metadata": {
+        "description": "This is a detailed description of this Azure Resource"
+      }
+    },
+    "resourceGroupName": {
+      "defaultValue": "adap-smk-eus-rg",
+      "type": "string",
+      "metadata": {
+        "description": "This is the target resource group for this asset. Used in tagging and audit control"
+      }
+    },
+    "displayName": {
+      "defaultValue": "sqlServerName: adap-smk-eus-001-sql",
+      "type": "string",
+      "metadata": {
+        "description": "This is the target resource group for this asset. Used in tagging and audit control"
+      }
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string",
+      "metadata": {
+        "description": "Chargeback Id for the resource. Used in Tags"
+      }
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string",
+      "metadata": {
+        "description": "The email address of the directly responsible individual. used in Tags"
+      }
+    },
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string",
+      "metadata": {
+        "description": "Short name of the ADAP project. Used for the name of resources created. (default: adap)"
+      }
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string",
+      "metadata": {
+        "description": "Version number of the project."
+      }
+    },
+    "environment": {
+      "defaultValue": "dev",
+      "type": "string",
+      "metadata": {
+        "description": "The tag name of the environment. (smk, dev, uat, prod, sbx)"
+      }
+    },
+    "tier": {
+      "defaultValue": "data",
+      "type": "string",
+      "metadata": {
+        "description": "Identifies what tier the resource lives or operates in."
+      }
+    },
+    "dataProfile": {
+      "defaultValue": "Confidential",
+      "type": "string",
+      "metadata": {
+        "description": "Used for data classification. Tags, auditing"
+      }
+    },
+    "organizationName": {
+      "defaultValue": "Contoso",
+      "type": "string",
+      "metadata": {
+        "description": "Short name of the organization. Used for the name of global resources created."
+      }
+    },
+    "regionName": {
+      "defaultValue": "eus",
+      "type": "string",
+      "metadata": {
+        "description": "The tag name of the location or region. Should align with the resource location. (eus, eus2, wus, wus2, scus, ncus, cus)"
+      }
+    },
+    "storageAccountName": {
+      "defaultValue": "adapsmkeus001stg",
+      "type": "string",
+      "metadata": {
+        "description": "The name of the storage account."
+      }
+    },
+    "accountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
+    "accessTier": {
+      "type": "string",
+      "defaultValue": "Hot",
+      "allowedValues": [
+        "Hot",
+        "Cool"
+      ],
+      "metadata": {
+        "description": "This setting is required if using BlobStorage as the storageKind, otherwise can be left blank"
+      }
+    },
+    "storageKind": {
+      "type": "string",
+      "defaultValue": "StorageV2",
+      "allowedValues": [
+        "Storage",
+        "StorageV2",
+        "BlobStorage"
+      ]
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2018-02-01",
+      "name": "[parameters('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('accountType')]"
+      },
+      "kind": "[parameters('storageKind')]",
+      "tags": {
+        "Display Name": "parameters('displayName')",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "parameters('tier')",
+        "Data Profile": "parameters('dataProfile')",
+        "Target RG": "parameters('resourceGroupName')",
+        "Description": "parameters('description')"
+      },
+      "properties": {
+        "encryption": {
+          "services": {
+            "blob": {
+              "enabled": true
+            },
+            "file": {
+              "enabled": true
+            }
+          },
+          "keySource": "Microsoft.Storage"
+        },
+        "accessTier": "[parameters('accessTier')]",
+        "supportsHttpsTrafficOnly": true
+      }
+    }
+  ],
+  "outputs": {
+    "storageKey": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
+    },
+    "storageConnectionString": {
+      "type": "string",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts',parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
+    }
+  }
+}

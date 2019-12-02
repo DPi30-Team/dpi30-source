@@ -1,0 +1,162 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "description": {
+      "defaultValue": "Resource Description",
+      "type": "string",
+      "metadata": {
+        "description": "This is a detailed description of this Azure Resource"
+      }
+    },
+    "resourceGroupName": {
+      "defaultValue": "adap-smk-eus-rg",
+      "type": "string",
+      "metadata": {
+        "description": "This is the target resource group for this asset. Used in tagging and audit control"
+      }
+    },
+    "displayName": {
+      "defaultValue": "sqlServerName: adap-smk-eus-001-sql",
+      "type": "string",
+      "metadata": {
+        "description": "This is the target resource group for this asset. Used in tagging and audit control"
+      }
+    },
+    "chargebackId": {
+      "defaultValue": "8675309",
+      "type": "string",
+      "metadata": {
+        "description": "Chargeback Id for the resource. Used in Tags"
+      }
+    },
+    "dri": {
+      "defaultValue": "admin@contoso.com",
+      "type": "string",
+      "metadata": {
+        "description": "The email address of the directly responsible individual. used in Tags"
+      }
+    },
+    "projectName": {
+      "defaultValue": "adap",
+      "type": "string",
+      "metadata": {
+        "description": "Short name of the ADAP project. Used for the name of resources created. (default: adap)"
+      }
+    },
+    "projectVersion": {
+      "defaultValue": "1.0",
+      "type": "string",
+      "metadata": {
+        "description": "Version number of the project."
+      }
+    },
+    "environment": {
+      "defaultValue": "dev",
+      "type": "string",
+      "metadata": {
+        "description": "The tag name of the environment. (smk, dev, uat, prod, sbx)"
+      }
+    },
+    "tier": {
+      "defaultValue": "data",
+      "type": "string",
+      "metadata": {
+        "description": "Identifies what tier the resource lives or operates in."
+      }
+    },
+    "dataProfile": {
+      "defaultValue": "Confidential",
+      "type": "string",
+      "metadata": {
+        "description": "Used for data classification. Tags, auditing"
+      }
+    },
+    "organizationName": {
+      "defaultValue": "Contoso",
+      "type": "string",
+      "metadata": {
+        "description": "Short name of the organization. Used for the name of global resources created."
+      }
+    },
+    "sqlServerName": {
+      "defaultValue": "adap-smk-eus-001-sql",
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Logical SQL Server."
+      }
+    },
+    "regionName": {
+      "defaultValue": "eus",
+      "type": "string",
+      "metadata": {
+        "description": "The tag name of the location or region. Should align with the resource location. (eus, eus2, wus, wus2, scus, ncus, cus)"
+      }
+    },
+    "sqlServerAdminUserName": {
+      "defaultValue": "sqlAdmin",
+      "type": "string",
+      "metadata": {
+        "description": "The Azure SQL Server Administrator (SA) username "
+      }
+    },
+    "sqlServerAdminPassword": {
+      "defaultValue": "Z1!xcvbnmnbvcxz",
+      "type": "string",
+      "metadata": {
+        "description": "The Azure SQL Server Administrator (SA) password"
+      }
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "name": "[parameters('sqlServerName')]",
+      "type": "Microsoft.Sql/servers",
+      "tags": {
+        "Display Name": "parameters('displayName')",
+        "Bill To - Internal Chargeback ID": "parameters('chargebackId')",
+        "Operator or Directly Responsible Individual (DRI)": "parameters('dri')",
+        "Project Name": "parameters('projectName')",
+        "Project Version": "parameters('projectVersion')",
+        "Environment": "parameters('environmentTag')",
+        "Tier": "parameters('tier')",
+        "Data Profile": "parameters('dataProfile')",
+        "Target RG": "parameters('resourceGroupName')",
+        "Description": "parameters('description')"
+      },
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "administratorLogin": "[parameters('sqlServerAdminUserName')]",
+        "administratorLoginPassword": "[parameters('sqlServerAdminPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "sqlServerName": {
+      "type": "string",
+      "value": "[parameters('sqlServerName')]"
+    },
+    "sqlServerFqdn": {
+      "type": "string",
+      "value": "[reference(concat('Microsoft.Sql/servers/', parameters('sqlServerName'))).fullyQualifiedDomainName]"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "MaxConcurrentJobsPerNode":  {
+                                                        "value":  8
+                                                    },
+                       "CatalogServerEndpoint":  {
+                                                     "value":  "default"
+                                                 },
+                       "NodeCount":  {
+                                         "value":  2
+                                     },
+                       "NodeSize":  {
+                                        "value":  "default"
+                                    },
+                       "DataFactoryName":  {
+                                               "value":  "default"
+                                           },
+                       "CatalogServerAdminUsername":  {
+                                                          "value":  "default"
+                                                      },
+                       "RuntimeDescription":  {
+                                                  "value":  "default"
+                                              },
+                       "RuntimeName":  {
+                                           "value":  "default"
+                                       },
+                       "CatalogServerAdminPassword":  {
+                                                          "value":  "default"
+                                                      }
+                   }
+}

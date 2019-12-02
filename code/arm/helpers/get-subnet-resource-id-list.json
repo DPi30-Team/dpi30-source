@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The name of the virtual network that contains the subnet configurations"
+      }
+    },
+    "subnetConfiguration": {
+      "type": "array",
+      "defaultValue": [],
+      "metadata": {
+        "description": "An array of subnet configuration objects"
+      }
+    }
+  },
+  "variables": {
+    "copy": [
+      {
+        "name": "subnetResourceIdListCopy",
+        "count": "[if(greater(length(parameters('subnetConfiguration')), 0), length(parameters('subnetConfiguration')), 1)]",
+        "input": "[if(greater(length(parameters('subnetConfiguration')), 0), resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetConfiguration')[copyIndex('subnetResourceIdListCopy')].name), json('null'))]"
+      }
+    ],
+    "emptyArray": [],
+    "subnetResourceIdList": "[if(greater(length(parameters('subnetConfiguration')), 0), variables('subnetResourceIdListCopy'), variables('emptyArray'))]"
+  },
+  "resources": [],
+  "outputs": {
+    "subnetResourceIdList": {
+      "type": "array",
+      "value": "[variables('subnetResourceIdList')]"
+    }
+  }
+}

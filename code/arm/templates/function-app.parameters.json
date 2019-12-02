@@ -1,0 +1,48 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "customHostName":  {
+                                              "value":  "default"
+                                          },
+                       "functionAppAppSettings":  {
+                                                      "value":  "default"
+                                                  },
+                       "chargebackId":  {
+                                            "value":  "8675309"
+                                        },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "appServicePlanResourceGroup":  {
+                                                           "value":  "default"
+                                                       },
+                       "functionAppConnectionStrings":  {
+                                                            "value":  "default"
+                                                        },
+                       "appServicePlanName":  {
+                                                  "value":  "default"
+                                              },
+                       "certificateThumbprint":  {
+                                                     "value":  "default"
+                                                 },
+                       "dri":  {
+                                   "value":  "admin@contoso.com"
+                               },
+                       "ipSecurityRestrictions":  {
+                                                      "value":  "default"
+                                                  },
+                       "functionAppName":  {
+                                               "value":  "default"
+                                           },
+                       "projectName":  {
+                                           "value":  "adap"
+                                       },
+                       "locationtag":  {
+                                           "value":  "eus"
+                                       },
+                       "environmentTag":  {
+                                              "value":  "dev"
+                                          }
+                   }
+}

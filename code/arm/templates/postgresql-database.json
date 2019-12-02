@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serverName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the PostgreSQL server instance."
+      }
+    },
+    "databaseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the database that will be associated with the PostgreSQL server instance."
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2017-12-01",
+      "name": "[concat(parameters('serverName'), '/', parameters('databaseName'))]",
+      "type": "Microsoft.DBforPostgreSQL/servers/databases",
+      "properties": {}
+    }
+  ],
+  "outputs": {}
+}

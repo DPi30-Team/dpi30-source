@@ -1,0 +1,24 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "DataFactoryLocation":  {
+                                                   "value":  "West Europe"
+                                               },
+                       "GitHubAccountName":  {
+                                                 "value":  "default"
+                                             },
+                       "VstsAccountName":  {
+                                               "value":  "default"
+                                           },
+                       "RepositoryName":  {
+                                              "value":  "default"
+                                          },
+                       "VstsProjectName":  {
+                                               "value":  "default"
+                                           },
+                       "DataFactoryName":  {
+                                               "value":  "default"
+                                           }
+                   }
+}

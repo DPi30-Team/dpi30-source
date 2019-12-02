@@ -1,0 +1,42 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "environmentTag":  {
+                                              "value":  "dev"
+                                          },
+                       "cosmosDatabase":  {
+                                              "value":  "default"
+                                          },
+                       "dri":  {
+                                   "value":  "admin@contoso.com"
+                               },
+                       "containerName":  {
+                                             "value":  "default"
+                                         },
+                       "projectName":  {
+                                           "value":  "adap"
+                                       },
+                       "chargebackId":  {
+                                            "value":  "8675309"
+                                        },
+                       "cosmosDbAccountName":  {
+                                                   "value":  "default"
+                                               },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "pathArray":  {
+                                         "value":  "default"
+                                     },
+                       "cosmosDBType":  {
+                                            "value":  "default"
+                                        },
+                       "locationtag":  {
+                                           "value":  "eus"
+                                       },
+                       "partitionKey":  {
+                                            "value":  "default"
+                                        }
+                   }
+}

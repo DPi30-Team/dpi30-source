@@ -1,0 +1,16 @@
+{
+  "config": {
+    "policyName": {
+      "value": "afc-audit-datalakestore-rbac-allowed-role-definitions"
+    },
+    "policyDisplayName": {
+      "value": " [afc] Audit Policy for DataLakeStore RBAC Allowed Role Definitions"
+    },
+    "policyDescription": {
+      "value": "Audit DataLakeStore RBAC Allowed Role Definitions"
+    },
+    "policyCategory": {
+      "value": "{\"category\":\"AFC\"}"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "config": {
+    "policyName": {
+      "value": "afc-audit-eventhub-rbac-allowed-role-definitions"
+    },
+    "policyDisplayName": {
+      "value": " [afc] Audit Policy for EventHub RBAC Allowed Role Definitions"
+    },
+    "policyDescription": {
+      "value": "Audit EventHub RBAC Allowed Role Definitions"
+    },
+    "policyCategory": {
+      "value": "{\"category\":\"AFC\"}"
+    }
+  }
+}

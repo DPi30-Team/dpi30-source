@@ -1,0 +1,11 @@
+{
+  "parameters": {
+    "roleDefinitionIds": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Approved Role Definitions",
+        "description": "The list of role definition Ids"
+      }
+    }
+  }
+}

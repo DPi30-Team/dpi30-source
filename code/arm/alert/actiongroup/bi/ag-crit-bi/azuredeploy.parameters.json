@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "emailAddress": {
+      "value": "patrick@gallucci.us"
+    },
+    "actionGroupName": {
+      "value": "ag-critical-businessintelligence"
+    },
+    "actionGroupShortName": {
+      "value": "ag-crit-bi"
+    },
+    "smsPhoneNumber": {
+      "value": "8179950241"
+    },
+    "voicePhoneNumber": {
+      "value": "8179950241"
+    },
+    "azAppPushId": {
+      "value": "patrick@gallucci.us"
+    }
+  }
+}

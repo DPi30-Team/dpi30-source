@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configuration": {
+      "value": {
+        "displayName": "Policy Compliance Alert",
+        "managedBy": "support@MSP.com",
+        "environment": "PRD",
+        "application": "Security",
+        "billing": "['Fabric']",
+        "deploymentDate": "2019-04-22 00:00:00Z",
+        "deploymentUser": "smakai@quiorp.com",
+        "role": "Azure Alert"
+      }
+    },
+    "policyName": {
+      "value": "afc-audit-sql-server-advdatasecurity"
+    },
+    "laWorkspaceName": {
+      "value": "omsquipeus"
+    },
+    "laResourceGroupName": {
+      "value": "rsg02quipeus2"
+    },
+    "alertFrequency": {
+      "value": 60
+    },
+    "alertTime": {
+      "value": 60
+    },
+    "alertSeverity": {
+      "value": 0
+    },
+    "primaryActionGroup": {
+      "value": "ag-critical-security"
+    }
+  }
+}

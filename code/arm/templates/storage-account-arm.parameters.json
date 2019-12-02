@@ -1,0 +1,68 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "allowedOrigins":  {
+                                              "value":  [
+                                                            "*"
+                                                        ]
+                                          },
+                       "storageKind":  {
+                                           "value":  "Storage"
+                                       },
+                       "storageAccountLocation":  {
+                                                      "value":  "[resourceGroup().location]"
+                                                  },
+                       "allowedHeaders":  {
+                                              "value":  [
+                                                            "*"
+                                                        ]
+                                          },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "maxAgeInSeconds":  {
+                                               "value":  "3600"
+                                           },
+                       "exposedHeaders":  {
+                                              "value":  [
+                                                            "*"
+                                                        ]
+                                          },
+                       "subnetResourceIdList":  {
+                                                    "value":  "default"
+                                                },
+                       "accessTier":  {
+                                          "value":  "default"
+                                      },
+                       "allowedMethods":  {
+                                              "value":  [
+                                                            "GET"
+                                                        ]
+                                          },
+                       "storageAccountName":  {
+                                                  "value":  "default"
+                                              },
+                       "chargebackId":  {
+                                            "value":  "8675309"
+                                        },
+                       "accountType":  {
+                                           "value":  "Standard_LRS"
+                                       },
+                       "dri":  {
+                                   "value":  "admin@contoso.com"
+                               },
+                       "enableCors":  {
+                                          "value":  "False"
+                                      },
+                       "projectName":  {
+                                           "value":  "adap"
+                                       },
+                       "locationtag":  {
+                                           "value":  "eus"
+                                       },
+                       "environmentTag":  {
+                                              "value":  "dev"
+                                          }
+                   }
+}

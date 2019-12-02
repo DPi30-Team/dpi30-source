@@ -1,0 +1,16 @@
+{
+  "config": {
+    "policyName": {
+      "value": "afc-audit-logicapp-rbac-allowed-role-definitions"
+    },
+    "policyDisplayName": {
+      "value": " [afc] Audit Policy for LogicApp RBAC Allowed Role Definitions"
+    },
+    "policyDescription": {
+      "value": "Audit LogicApp RBAC Allowed Role Definitions"
+    },
+    "policyCategory": {
+      "value": "{\"category\":\"AFC\"}"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "databaseSkuName":  {
+                                               "value":  "default"
+                                           },
+                       "serverlessAutoPauseDelay":  {
+                                                        "value":  "-1"
+                                                    },
+                       "dataMaskingExemptPrincipals":  {
+                                                           "value":  "default"
+                                                       },
+                       "logAnalyticsResourceGroup":  {
+                                                         "value":  "default"
+                                                     },
+                       "diagnosticsRetentionDays":  {
+                                                        "value":  "default"
+                                                    },
+                       "sqlServerName":  {
+                                             "value":  "default"
+                                         },
+                       "projectVersion":  {
+                                              "value":  "1.0"
+                                          },
+                       "dri":  {
+                                   "value":  "admin@contoso.com"
+                               },
+                       "databaseName":  {
+                                            "value":  "default"
+                                        },
+                       "logAnalyticsSubscriptionId":  {
+                                                          "value":  "[subscription().subscriptionId]"
+                                                      },
+                       "chargebackId":  {
+                                            "value":  "8675309"
+                                        },
+                       "logAnalyticsWorkspaceName":  {
+                                                         "value":  "default"
+                                                     },
+                       "databaseTier":  {
+                                            "value":  "default"
+                                        },
+                       "databaseSizeBytes":  {
+                                                 "value":  "default"
+                                             },
+                       "dataMaskingRules":  {
+                                                "value":  "default"
+                                            },
+                       "elasticPoolName":  {
+                                               "value":  "default"
+                                           },
+                       "projectName":  {
+                                           "value":  "adap"
+                                       },
+                       "locationtag":  {
+                                           "value":  "eus"
+                                       },
+                       "environmentTag":  {
+                                              "value":  "dev"
+                                          },
+                       "serverlessMinCapacity":  {
+                                                     "value":  "default"
+                                                 }
+                   }
+}

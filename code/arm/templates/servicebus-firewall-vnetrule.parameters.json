@@ -1,0 +1,21 @@
+{
+    "$schema":  "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion":  "1.0.0.0",
+    "parameters":  {
+                       "vnetName":  {
+                                        "value":  "default"
+                                    },
+                       "servicebusName":  {
+                                              "value":  "default"
+                                          },
+                       "subnetNames":  {
+                                           "value":  "default"
+                                       },
+                       "ipRules":  {
+                                       "value":  "default"
+                                   },
+                       "vnetResourceGroup":  {
+                                                 "value":  "default"
+                                             }
+                   }
+}

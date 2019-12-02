@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "variables": {},
+  "parameters": {
+    "configuration": {
+      "type": "object",
+      "metadata": {
+        "description": "Configuration for this resource"
+      }
+    },
+    "alertName": {
+      "type": "string"
+    },
+    "alertDescription": {
+      "type": "string"
+    },
+    "primaryActionGroup": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Insights/activityLogAlerts",
+      "apiVersion": "2017-04-01",
+      "name": "[parameters('alertName')]",
+      "location": "Global",
+      "tags": "[parameters('configuration')]",
+      "properties": {
+        "scopes": [ "[subscription().id]" ],
+        "condition": {
+          "allOf": [
+            {
+              "field": "Category",
+              "equals": "ServiceHealth"
+            }
+          ]
+        },
+        "actions": {
+          "actionGroups": [
+            {
+              "actionGroupId": "[resourceId('microsoft.insights/actionGroups', parameters('primaryActionGroup'))]",
+              "webhookProperties": {}
+            }
+          ]
+        },
+        "enabled": true,
+        "description": "[parameters('alertDescription')]"
+      },
+      "dependsOn": []
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9D0E86F3-A8F4-4995-8B83-AC6DD8A902A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ps", "ps", "{C5AE382C-9B7F-47AE-862B-64EC13240906}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\dpi30-deploy-adap-platform.ps1 = scripts\ps\dpi30-deploy-adap-platform.ps1
+		scripts\ps\readme.md = scripts\ps\readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ad", "ad", "{4A84C362-7507-4891-8C9D-BCE16B47C72A}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\ad\create-azure-ad-groups.ps1 = scripts\ps\azure\ad\create-azure-ad-groups.ps1
+		scripts\ps\azure\ad\create-azure-ad-users.ps1 = scripts\ps\azure\ad\create-azure-ad-users.ps1
+		scripts\ps\azure\ad\create-azure-role-assignment.ps1 = scripts\ps\azure\ad\create-azure-role-assignment.ps1
+		scripts\ps\azure\ad\create-azure-role-definition.ps1 = scripts\ps\azure\ad\create-azure-role-definition.ps1
+		scripts\ps\azure\ad\create-azure-service-principal.ps1 = scripts\ps\azure\ad\create-azure-service-principal.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "alert", "alert", "{C361EE26-6618-4E30-A488-50511202467A}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\alert\deploy-azure-action-group-defs.ps1 = scripts\ps\azure\alert\deploy-azure-action-group-defs.ps1
+		scripts\ps\azure\alert\deploy-azure-alert-defs.ps1 = scripts\ps\azure\alert\deploy-azure-alert-defs.ps1
+		scripts\ps\azure\alert\MonitorQueries.txt = scripts\ps\azure\alert\MonitorQueries.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blueprint", "blueprint", "{494194A0-E5F0-43A4-BEEA-A8FA1E0CD114}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\blueprint\Import-Export-Blueprints.ps1 = scripts\ps\azure\blueprint\Import-Export-Blueprints.ps1
+		scripts\ps\azure\blueprint\manage-blueprint.ps1 = scripts\ps\azure\blueprint\manage-blueprint.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines-scripts", "pipelines-scripts", "{1D942E1A-3B02-40BD-BA53-2E6BBCDE39DC}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\blueprint\pipelines-scripts\build.ps1 = scripts\ps\azure\blueprint\pipelines-scripts\build.ps1
+		scripts\ps\azure\blueprint\pipelines-scripts\README.md = scripts\ps\azure\blueprint\pipelines-scripts\README.md
+		scripts\ps\azure\blueprint\pipelines-scripts\release.ps1 = scripts\ps\azure\blueprint\pipelines-scripts\release.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compliance", "compliance", "{63C1ACB4-3F52-4990-9B52-423BE65E9FB8}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\compliance\test-compliance.ps1 = scripts\ps\azure\compliance\test-compliance.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "management-group", "management-group", "{E95C9FD5-8556-423A-818F-623529D7D835}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\management-group\create-management-groups.ps1 = scripts\ps\azure\management-group\create-management-groups.ps1
+		scripts\ps\azure\management-group\remove-management-groups.ps1 = scripts\ps\azure\management-group\remove-management-groups.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "policy", "policy", "{9916E8DE-0035-4B83-A50D-F4C9BB4ED8AB}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\policy\assign-azure-policies.ps1 = scripts\ps\azure\policy\assign-azure-policies.ps1
+		scripts\ps\azure\policy\AzurePolicyAlias.txt = scripts\ps\azure\policy\AzurePolicyAlias.txt
+		scripts\ps\azure\policy\deploy-azure-policy-definitions.ps1 = scripts\ps\azure\policy\deploy-azure-policy-definitions.ps1
+		scripts\ps\azure\policy\deploy-azure-policy-initiatives.ps1 = scripts\ps\azure\policy\deploy-azure-policy-initiatives.ps1
+		scripts\ps\azure\policy\extract-azure-policies.ps1 = scripts\ps\azure\policy\extract-azure-policies.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "subscriptions", "subscriptions", "{8A766399-F67F-41D3-9B34-0CF4654B5154}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\subscriptions\clean-subscription.ps1 = scripts\ps\azure\subscriptions\clean-subscription.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{202E0DA3-27CF-48F7-94FD-E4E4A06CFD74}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\common\azure-common.psm1 = scripts\ps\common\azure-common.psm1
+		scripts\ps\common\EPPlus.dll = scripts\ps\common\EPPlus.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{0FAB8F2F-CD19-4271-B80C-F718D8CC67D7}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\config\$adapCMDB = scripts\ps\config\$adapCMDB
+		scripts\ps\config\adap-configuration.psm1 = scripts\ps\config\adap-configuration.psm1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arm", "arm", "{5F845790-1475-4BA7-9653-15F8CE14AF25}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "arm", "arm\arm.deployproj", "{DF893EA1-A59F-4744-A3F3-C48FA2C12885}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{449131EE-5B5B-41C4-ABF4-9F3A03E85C24}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\ps\azure\tools\create-arm-template-parameter-files.ps1 = scripts\ps\azure\tools\create-arm-template-parameter-files.ps1
+		scripts\ps\azure\tools\get-aad-groupid.ps1 = scripts\ps\azure\tools\get-aad-groupid.ps1
+		scripts\ps\azure\tools\set-sql-admin-aad.ps1 = scripts\ps\azure\tools\set-sql-admin-aad.ps1
+		scripts\ps\azure\tools\test-arm-template.ps1 = scripts\ps\azure\tools\test-arm-template.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF893EA1-A59F-4744-A3F3-C48FA2C12885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF893EA1-A59F-4744-A3F3-C48FA2C12885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF893EA1-A59F-4744-A3F3-C48FA2C12885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF893EA1-A59F-4744-A3F3-C48FA2C12885}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C5AE382C-9B7F-47AE-862B-64EC13240906} = {9D0E86F3-A8F4-4995-8B83-AC6DD8A902A0}
+		{83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2} = {C5AE382C-9B7F-47AE-862B-64EC13240906}
+		{4A84C362-7507-4891-8C9D-BCE16B47C72A} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{C361EE26-6618-4E30-A488-50511202467A} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{494194A0-E5F0-43A4-BEEA-A8FA1E0CD114} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{1D942E1A-3B02-40BD-BA53-2E6BBCDE39DC} = {494194A0-E5F0-43A4-BEEA-A8FA1E0CD114}
+		{63C1ACB4-3F52-4990-9B52-423BE65E9FB8} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{E95C9FD5-8556-423A-818F-623529D7D835} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{9916E8DE-0035-4B83-A50D-F4C9BB4ED8AB} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{8A766399-F67F-41D3-9B34-0CF4654B5154} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+		{202E0DA3-27CF-48F7-94FD-E4E4A06CFD74} = {C5AE382C-9B7F-47AE-862B-64EC13240906}
+		{0FAB8F2F-CD19-4271-B80C-F718D8CC67D7} = {C5AE382C-9B7F-47AE-862B-64EC13240906}
+		{DF893EA1-A59F-4744-A3F3-C48FA2C12885} = {5F845790-1475-4BA7-9653-15F8CE14AF25}
+		{449131EE-5B5B-41C4-ABF4-9F3A03E85C24} = {83C9CBDE-A6E2-4D4D-AD8A-6AAEAFA257A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAC39934-C0F9-4049-8A38-B9EF449090E3}
+	EndGlobalSection
+EndGlobal

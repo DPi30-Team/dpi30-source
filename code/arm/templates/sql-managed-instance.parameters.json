@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmenttag": {
+      "value": "dev"
+    },
+    "sqlServerName": {
+      "value": "test"
+    },
+    "dri": {
+      "value": "admin@contoso.com"
+    },
+    "sqlServerAdminUserName": {
+      "value": "sqlAdmin"
+    },
+    "projectname": {
+      "value": "adap"
+    },
+    "chargebackid": {
+      "value": "8675309"
+    },
+    "projectversion": {
+      "value": "1.0"
+    },
+    "organizationName": {
+      "value": "Contoso"
+    },
+    "sqlServerAdminPassword": {
+      "value": "Z1!xcvbnmnbvcxz"
+    },
+    "locationtag": {
+      "value": "eus"
+    }
+  }
+}
