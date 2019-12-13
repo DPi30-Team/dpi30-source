@@ -1,4 +1,4 @@
-#Data Platform in 30 Days (DPi30) 
+# Data Platform in 30 Days (DPi30) 
 ## Azure Data & Analytics Platform (ADAP)
 
 [![Build Status](https://dev.azure.com/quisitive/DPi30/_apis/build/status/DPi30?branchName=master)](https://dev.azure.com/quisitive/DPi30/_build/latest?definitionId=28&branchName=master)
