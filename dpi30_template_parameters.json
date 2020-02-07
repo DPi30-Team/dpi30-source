@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "KeyVaultName": {
+            "value": "uniqueKeyVaultName"
+        },
+        "DataFactoryName": {
+            "value": "uniqueDataFactoryName"
+        },
+        "DataLakeName": {
+            "value": "uniqueDataLakeStorageName",
+        },
+        "SqlServerName": {
+            "value": "uniqueSqlServerName"
+        },
+        "SqlServerAdminUsername": {
+            "value": "sqladmin"
+        },
+        "SqlServerAdminPassword" : {
+            "value": ""
+        },
+        "SqlServerDatabaseName": {
+            "value": "database01"
+        },
+        "AnalysisServicesName": {
+            "value": "uniqueAnalysisServicesName"
+        },
+        "AdministratorEmailAddress": {
+            "value": "user@domain.com"
+        }
+    }
+}
