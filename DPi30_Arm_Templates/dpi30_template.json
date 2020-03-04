@@ -10,6 +10,10 @@
             "defaultValue": "uniqueDataFactoryName",
             "type": "String"
         },
+        "DataFactoryIntegrationRuntimeName": {
+            "defaultValue": "OnPremIntegrationRuntime1",
+            "type": "String"
+        },
         "DataLakeName": {
             "defaultValue": "uniqueDataLakeStorageName",
             "type": "String"
@@ -24,6 +28,14 @@
         },
         "SqlServerAdminPassword" : {
             "type": "SecureString"
+        },
+        "SqlServerDatabaseType": {
+            "defaultValue": "Database",
+            "type": "String",
+            "allowedValues": [
+                "Database",
+                "DataWarehouse"
+            ]
         },
         "SqlServerDatabaseName": {
             "defaultValue": "database01",
@@ -51,6 +63,19 @@
                 "type":"SystemAssigned"
             },
             "resources": [
+                {
+                    "name": "[parameters('DataFactoryIntegrationRuntimeName')]",
+                    "type": "integrationRuntimes",
+                    "apiVersion": "2018-06-01",
+                    "properties": {
+                        "annotations": [],
+                        "type": "SelfHosted",
+                        "typeProperties": {}
+                    },
+                    "dependsOn": [
+                        "[resourceId('Microsoft.DataFactory/factories', parameters('DataFactoryName'))]"
+                    ]
+                },
                 {
                     "name": "[concat('KeyVault-', parameters('KeyVaultName'))]",
                     "type": "linkedServices",
@@ -237,6 +262,40 @@
             }
         },
         {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('KeyVaultName'), '/', parameters('DataFactoryName'), '-', parameters('DataFactoryIntegrationRuntimeName'), '-key1')]",
+            "location": "[variables('DeploymentLocation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('KeyVaultName'))]",
+                "[concat(resourceId('Microsoft.DataFactory/factories', parameters('DataFactoryName')))]",
+                "[concat(resourceId('Microsoft.DataFactory/factories', parameters('DataFactoryName')), '/integrationRuntimes/', parameters('DataFactoryIntegrationRuntimeName'))]"
+            ],
+            "properties": {
+                "value" : "[listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationRuntimes', parameters('DataFactoryName'), parameters('DataFactoryIntegrationRuntimeName')), '2018-06-01').authKey1]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('KeyVaultName'), '/', parameters('DataFactoryName'), '-', parameters('DataFactoryIntegrationRuntimeName'), '-key2')]",
+            "location": "[variables('DeploymentLocation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('KeyVaultName'))]",
+                "[concat(resourceId('Microsoft.DataFactory/factories', parameters('DataFactoryName')))]",
+                "[concat(resourceId('Microsoft.DataFactory/factories', parameters('DataFactoryName')), '/integrationRuntimes/', parameters('DataFactoryIntegrationRuntimeName'))]"
+            ],
+            "properties": {
+                "value" : "[listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationRuntimes', parameters('DataFactoryName'), parameters('DataFactoryIntegrationRuntimeName')), '2018-06-01').authKey2]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
             "type": "Microsoft.Sql/servers",
             "apiVersion": "2015-05-01-preview",
             "name": "[parameters('SqlServerName')]",
@@ -257,20 +316,33 @@
                         "[resourceId('Microsoft.Sql/servers', parameters('SqlServerName'))]"
                     ],
                     "sku": {
-                        "name": "Standard",
-                        "tier": "Standard",
-                        "capacity": ""
+                        "name": "[if(equals(parameters('SqlServerDatabaseType'),'Database'), 'S0', 'DW100c')]"
                     },
-                    "kind": "v12.0,user",
+                    "kind": "[concat('v12.0,user',if(equals(parameters('SqlServerDatabaseType'),'DataWarehouse'), ',datawarehouse,gen2', ''))]",
                     "properties": {
                         "collation": "SQL_Latin1_General_CP1_CI_AS",
-                        "maxSizeBytes": 107374182400,
+                        "maxSizeBytes": "[if(equals(parameters('SqlServerDatabaseType'),'Database'),'107374182400','263882790666240')]",
                         "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
                         "zoneRedundant": false,
                         "readScale": "Disabled",
                         "readReplicaCount": 0,
-                        "storageAccountType": "GRS"
-                    }
+                        "storageAccountType": "GRS",
+                        "autoPauseDelay": 30
+                    },
+                    "resources": [
+                        {
+                            "comments": "Transparent Data Encryption",
+                            "name": "current",
+                            "type": "transparentDataEncryption",
+                            "apiVersion": "2014-04-01-preview",
+                            "properties": {
+                                "status": "Enabled"
+                            },
+                            "dependsOn": [
+                                "[parameters('SqlServerDatabaseName')]"
+                            ]
+                        }
+                    ]
                 },
                 {
                     "type": "firewallRules",
@@ -308,5 +380,15 @@
                 "serverMonitorMode": 1
             }
         }
-    ]
+    ],
+    "outputs": {
+        "datafactory_runtime_key1": {
+            "type": "string",
+            "value": "[listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationRuntimes', parameters('DataFactoryName'), parameters('DataFactoryIntegrationRuntimeName')), '2018-06-01').authKey1]"
+        },
+        "datafactory_runtime_key2": {
+            "type": "string",
+            "value": "[listAuthKeys(resourceId('Microsoft.DataFactory/factories/integrationRuntimes', parameters('DataFactoryName'), parameters('DataFactoryIntegrationRuntimeName')), '2018-06-01').authKey2]"
+        }
+    }
 }

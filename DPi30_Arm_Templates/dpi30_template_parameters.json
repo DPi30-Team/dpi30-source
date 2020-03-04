@@ -8,8 +8,11 @@
         "DataFactoryName": {
             "value": "uniqueDataFactoryName"
         },
+        "DataFactoryIntegrationRuntimeName": {
+            "value": "OnPremIntegrationRuntime1"
+        },
         "DataLakeName": {
-            "value": "uniqueDataLakeStorageName",
+            "value": "uniqueDataLakeStorageName"
         },
         "SqlServerName": {
             "value": "uniqueSqlServerName"
@@ -22,6 +25,9 @@
         },
         "SqlServerDatabaseName": {
             "value": "database01"
+        },
+        "SqlServerDatabaseType": {
+            "value": "Database"
         },
         "AnalysisServicesName": {
             "value": "uniqueAnalysisServicesName"
